@@ -1,3 +1,0 @@
----
-# etc_hosts role variables
-etc_hosts_group: staging_production
