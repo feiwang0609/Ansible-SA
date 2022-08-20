@@ -1,3 +1,0 @@
----
-# - import_playbook: playbooks/shakealert_servers.yml
-- import_playbook: playbooks/postgres_servers.yml
