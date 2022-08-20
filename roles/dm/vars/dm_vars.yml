@@ -1,0 +1,37 @@
+---
+
+user_dm: dm
+user_amq: amq
+user_epic: epic
+user_befores: befores
+user_postgres: postgres
+user_eewdata: eewdata
+user_epic: epic
+user_eqinfo2gm: eqinfo2gm
+user_finder: finder
+user_glarms: glarms
+user_ha: ha
+user_oracle: oracle
+user_sa: sa
+
+group_eew: eew
+group_postgres: postgres
+
+source_run_bin: /home/feiwang/sa_ansible/roles/dm/files/app/dm/run/bin
+source_run_para: /home/feiwang/sa_ansible/roles/dm/files/app/dm/run/params
+source3_run_logs: /home/feiwang/sa_ansible/roles/dm/files/app/dm/run/logs
+source4_run_pids: /home/feiwang/sa_ansible/roles/dm/files/app/dm/run/pids
+dest_run_bin: /app/dm/run/bin
+dest_run_para: /app/dm/run/params
+dest_run_logs: /app/dm/run/logs
+dest_run_pids: /app/dm/run/pids
+
+dm_algori_user: decimod
+dm_algori_pass: JOR93gyd3v7
+
+dm_alert_user: decimod
+dm_alert_pass: JOR93gyd3v7
+
+dm_tcp_port: 61616
+
+dm_heartbeat_name: dm.eew-ci-int1

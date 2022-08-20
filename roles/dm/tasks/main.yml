@@ -1,0 +1,10 @@
+---
+- name: Set up dm user
+  ansible.builtin.import_tasks: user.yml
+  tags:
+    - user
+
+- name: Set up dm under the user
+  ansible.builtin.import_tasks: dm.yml
+  tags:
+    - dm

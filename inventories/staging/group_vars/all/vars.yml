@@ -1,0 +1,8 @@
+---
+# packages role variables
+yum_additional:
+- perl-Date-Manip.noarch
+yum_additional_state: present
+
+# etc_hosts role variables
+etc_hosts_group: staging_production

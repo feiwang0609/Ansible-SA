@@ -1,0 +1,30 @@
+[Unit]
+Description=DM
+After=network.target
+StartLimitBurst=5
+StartLimitIntervalSec=35
+
+[Service]
+#Type=simple
+Type=forking
+User={{ dm_uname }}
+Group={{ dm_group | default(dm_uname) }}
+
+Environment="HOME={{dm_directory_home }}"
+#Environment="APP={{ dm_binary }}"
+Environment="APP=run_dm.sh"
+#Environment="EW_PARAMS=/app/dm/run/params"
+#Environment="EW_INSTALLATION=INST_{{ net_code }}"
+
+WorkingDirectory={{ dm_directory_working }}
+
+#ExecStart=/bin/bash -c "./bin/${APP} ${HOME}/run/params/dm.conf \
+#  |& /app/share/bin/conlog -l ${HOME}/run/logs/${APP}"
+ExecStart=/bin/bash -c "./bin/${APP} start"
+PIDFile="{{ dm_directory_pids }}/{{ dm_binary }}.pid"
+
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

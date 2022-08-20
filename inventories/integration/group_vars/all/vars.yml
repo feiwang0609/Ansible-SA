@@ -1,0 +1,33 @@
+---
+user_access_present: []
+
+user_access_absent:
+  - chblais
+
+postgres:
+  - db_user: postgres
+  - sa_db_user: eew
+  - sa_db_name: shakealert
+  - postgresql_data_dir: '/data/pgsql/14/data'
+  - postgresql_global_config_options:
+    - option: data_directory
+      value: "/data/pgsql/14/data"
+
+# packages role variables
+yum_groups_additional:
+- "@development"
+- "@system-admin-tools"
+yum_groups_additional_state: present
+yum_additional:
+- apr-util-devel
+- gcc-gfortran
+- gvim
+- imake
+- lcov
+- libgfortran
+- nc
+- xterm
+yum_additional_state: present
+
+# etc_hosts role variable
+etc_hosts_group: development_integration

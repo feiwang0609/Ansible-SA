@@ -1,0 +1,79 @@
+#! /bin/sh
+#
+# DM                   This system shell script takes care of starting
+#                      and stopping DM, by calling the application's
+#                      run script.
+#
+# chkconfig: 2345 96 4
+# description: DM
+#
+RETVAL=0
+
+# App details
+APP=dm
+APP_USER=dm
+APP_RUN="/app/dm/run/bin/run_dm.sh"
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Define lock file
+LOCKFILE=/var/lock/subsys/${APP}
+
+# Timeout for starting and stopping
+NUMBER_OF_CHECKS=10
+PAUSE=1
+
+# Start function
+start() {
+        runuser - -s /bin/sh ${APP_USER} -c "${APP_RUN} start"
+        RETVAL=$?
+        [ $RETVAL = 0 ] && touch $LOCKFILE
+        return $RETVAL
+}
+
+# Stop function
+stop() {
+        runuser - -s /bin/sh ${APP_USER} -c "${APP_RUN} stop"
+        RETVAL=$?
+        [ $RETVAL = 0 ] && rm -f $LOCKFILE
+        return $RETVAL
+}
+
+# Status function
+status() {
+        runuser - -s /bin/sh ${APP_USER} -c "${APP_RUN} status"
+        RETVAL=$?
+        return $RETVAL
+}
+
+# See how we were called.
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  status)
+        status
+        ;;
+  restart)
+        stop
+        for ((i=0; i<NUMBER_OF_CHECKS; i++)) {
+          status
+          RETVAL=$?
+          if [ $RETVAL -ne 1 ]; then
+            sleep $PAUSE
+          else
+            start
+            break
+          fi
+        }
+        ;;
+  *)
+        echo "Usage: $0 {start|stop|status|restart}"
+        RETVAL=1
+        ;;
+esac
+exit $RETVAL

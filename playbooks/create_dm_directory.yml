@@ -1,0 +1,57 @@
+---
+#- name: create  directory of dm folders
+#  hosts: local
+#  become: yes
+#  gather_facts: no
+
+# tasks:
+  #variables are stored in ./vars/dm_vars.yml
+  - include_vars: dm_vars.yml
+
+  - name: create dm directory if not exisit
+    ansible.builtin.file:
+      path: /app/{{ user_dm }} 
+      state: directory
+      mode: 0755
+      owner: "{{ user_dm }}"
+      group: "{{ group_eew }}"
+
+  - name: create run directory if not exisit
+    ansible.builtin.file:
+      path: /app/{{ user_dm }}/run  
+      state: directory
+      mode: 0755
+      owner: "{{ user_dm }}"
+      group: "{{ group_eew }}"
+
+  - name: create bin directory if not exisit
+    ansible.builtin.file:
+      path: /app/{{ user_dm }}/run/bin  
+      state: directory
+      mode: 0755
+      owner: "{{ user_dm }}"
+      group: "{{ group_eew }}"
+
+  - name: create logs directory if not exisit
+    ansible.builtin.file:
+      path: /app/{{ user_dm }}/run/logs
+      state: directory
+      mode: 0755
+      owner: "{{ user_dm }}"
+      group: "{{ group_eew }}"
+
+  - name: create params directory if not exisit
+    ansible.builtin.file:
+      path: /app/{{ user_dm }}/run/params
+      state: directory
+      mode: 0755
+      owner: "{{ user_dm }}"
+      group: "{{ group_eew }}"
+
+  - name: create pids directory if not exisit
+    ansible.builtin.file: 
+      path: /app/{{ user_dm }}/run/pids
+      state: directory
+      mode: 0755
+      owner: "{{ user_dm }}"
+      group: "{{ group_eew }}"

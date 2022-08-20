@@ -1,0 +1,158 @@
+---
+- name: deploy dm bin and params directory files
+  hosts: local
+  become: yes
+  gather_facts: no 
+  tasks:
+  - include_vars: dm_vars.yml
+
+  - name: Deploy dm on bin with owner and permissions
+    ansible.builtin.copy:
+      src: "{{ source_run_bin }}/dm"
+      dest: "{{ dest_run_bin }}/dm"
+      owner: "{{ user_dm }}"
+      group: "{{ group_eew }}"
+      mode: 0755
+    become: true
+    become_user: dm
+
+  - name: Deploy dm_env.sh on bin with owner and permissions
+    ansible.builtin.copy:
+      src: "{{ source_run_bin }}/dm_env.sh"
+      dest: "{{ dest_run_bin }}/dm_env.sh"
+      owner: "{{ user_dm }}"
+      group: "{{ group_eew }}"
+      mode: 0755
+    become: true
+    become_user: dm
+
+  - name: Deploy run_copy_dmlogs.sh on bin with owner and permissions
+    ansible.builtin.copy:
+      src: "{{ source_run_bin }}/run_copy_dmlogs.sh"
+      dest: "{{ dest_run_bin }}/run_copy_dmlogs.sh"
+      owner: "{{ user_dm }}"
+      group: "{{ group_eew }}"
+      mode: 0755
+    become: true
+    become_user: dm
+
+  - name: Deploy run_dm.sh on bin with owner and permissions
+    ansible.builtin.copy:
+      src: "{{ source_run_bin }}/run_dm.sh"
+      dest: "{{ dest_run_bin }}/run_dm.sh"
+      owner: "{{ user_dm }}"
+      group: "{{ group_eew }}"
+      mode: 0755
+    become: true
+    become_user: dm
+
+#  - name: Deploy all files on /app/dm/run/bin with owner and permissions
+#    ansible.builtin.copy:
+#      src: "{{ source_run_bin }}/"
+#      dest: "{{ dest_run_bin }}/"
+#      owner: "{{ user_dm }}"
+#      group: "{{ group_eew }}"
+#      mode: 0755
+#    become: true
+#    become_user: dm
+
+  - name: Deploy dmlogs.conf on params with owner and permissions
+    ansible.builtin.copy:
+      src: "{{ source_run_para }}/copy_dmlogs.conf"
+      dest: "{{ dest_run_para }}/copy_dmlogs.conf"
+      owner: "{{ user_dm }}"
+      group: "{{ group_eew }}"
+      mode: 0755
+    become: true
+    become_user: dm
+ 
+  - name: Deploy dm.conf on params with onwer and permissions
+    ansible.builtin.copy:
+      src: "{{ source_run_para }}/dm.conf"
+      dest: "{{ dest_run_para }}/dm.conf"
+      owner: "{{ user_dm }}"
+      group: "{{ group_eew }}"
+      mode: 0755
+    become: true
+    become_user: dm
+
+  - name: replace tcp port number on dm.conf
+    replace:
+      path: "{{ dest_run_para }}/dm.conf"
+      regexp: 'dm_tcp_port'
+      replace: "{{ dm_tcp_port }}"
+    become: true
+    become_user: dm
+
+  - name: replace heartbeat name on dm.conf
+    replace:
+      path: "{{ dest_run_para }}/dm.conf"
+      regexp: 'dm_heartbeat_name'
+      replace: "{{ dm_heartbeat_name }}"
+    become: true
+    become_user: dm
+
+  - name: replace algori username on dm.conf
+    replace:
+      path: "{{ dest_run_para }}/dm.conf"
+      regexp: 'dm_algori_user'
+      replace: "{{ dm_algori_user }}"
+    become: true
+    become_user: dm
+
+  - name: replace algori password on dm.conf
+    replace:
+      path: "{{ dest_run_para }}/dm.conf"
+      regexp: 'dm_algori_pass'
+      replace: "{{ dm_algori_pass }}"
+    become: true
+    become_user: dm
+
+  - name: replace alert username on dm.conf
+    replace:
+      path: "{{ dest_run_para }}/dm.conf"
+      regexp: 'dm_alert_user'
+      replace: "{{ dm_alert_user }}"
+    become: true
+    become_user: dm
+
+  - name: replace alert password on dm.conf
+    replace:
+      path: "{{ dest_run_para }}/dm.conf"
+      regexp: 'dm_alert_pass'
+      replace: "{{ dm_alert_pass }}"
+    become: true
+    become_user: dm
+
+#  - name: Deploy all files on /app/dm/run/params with owner and permissions
+#    ansible.builtin.copy:
+#      src: "{{ source_run_para }}/"
+#      dest: "{{ dest_run_para }}/"
+#      owner: "{{ user_dm }}"
+#      group: "{{ group_eew }}"
+#      mode: 0755
+#    become: true
+#    become_user: dm
+
+
+#  - name: Deploy all files on  /app/dm/run/logs with owner and permissions
+#    ansible.builtin.copy:
+#      src: "{{ source_run_logs }}/"
+#      dest: "{{ dest_run_logs }}/"
+#      owner: "{{ user_dm }}"
+#      group: "{{ group_eew }}"
+#      mode: 0755
+#    become: true
+#    become_user: dm
+
+#  - name: Deploy all files on pids with owner and permissions
+#    ansible.builtin.copy:
+#      src: "{{ source_run_pids }}/"
+#      dest: "{{ dest_run_pids }}/"
+#      owner: "{{ user_dm }}"
+#      group: "{{ group_eew }}"
+#      mode: 0755
+#    become: true
+#    become_user: dm
+
+

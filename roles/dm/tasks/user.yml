@@ -1,0 +1,18 @@
+---
+- name: Make sure that the group exists with correct gid
+  ansible.builtin.group:
+    name: "{{ dm_group }}"
+    state: present
+    gid: "{{ dm_gid | default(omit) }}"
+  when: dm_group is defined
+
+- name: Add the user with home directory
+  ansible.builtin.user:
+    name: "{{ dm_uname }}"
+    uid: "{{ dm_uid }}"
+    group: "{{ dm_group | default(omit) }}"
+    home: "{{ dm_directory_home }}"
+#    umask: '0022'
+    shell: "{{ dm_shell }}"
+    system: true
+    comment: dm

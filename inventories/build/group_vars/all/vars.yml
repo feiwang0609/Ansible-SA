@@ -1,0 +1,16 @@
+---
+# packages role variables
+yum_groups_additional:
+- "@development"
+- "@system-admin-tools"
+yum_groups_additional_state: present
+
+yum_additional:
+- apr-util-devel
+- gcc-gfortran
+- imake
+- libgfortran
+yum_additional_state: present
+
+# etc_hosts role variables
+etc_hosts_group: build
