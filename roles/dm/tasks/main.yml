@@ -8,3 +8,8 @@
   ansible.builtin.import_tasks: dm.yml
   tags:
     - dm
+
+- name: Set up systemd
+  ansible.builtin.import_tasks: dm-systemd.yml
+  tags:
+    - dm-systemd
