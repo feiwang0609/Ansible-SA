@@ -1,4 +1,5 @@
---- 
+---
+
 - name: Create dm directories
   ansible.builtin.file:
     path: "{{ item }}"
@@ -14,16 +15,12 @@
     - "{{ dm_directory_params }}"
     - "{{ dm_directory_pids }}"
 
-#- name: Copy dm parameter files
-#  ansible.builtin.copy:
-#    src: "{{ item }}"
-#    dest: "{{ dm_directory_params }}"
-#    owner: "{{ dm_uname }}"
-#    group: "{{ dm_group }}"
-#    mode: '644'
-#  with_fileglob:
-#    - "{{ dm_src_params }}/*"
- # notify: dm restart
+- name: set dm directory permission
+  ansible.builtin.file:
+    path: "{{ dm_directory_home }}"
+    owner: "{{ dm_uname }}"
+    group: "{{ dm_group }}"
+    mode: '755'
 
 - name: Create the dm.conf file
   ansible.builtin.template:
@@ -32,13 +29,42 @@
     owner: "{{ dm_uname }}"
     group: "{{ dm_group }}"
     mode: '644'
- # notify: dm restart
 
-- name: Create the dm run script
+- name: Create the copy_dmlogs.conf file
+  ansible.builtin.template:
+    src: "{{ dm_src_params }}/copy_dmlogs.conf.j2"
+    dest: "{{ dm_directory_params }}/copy_dmlogs.conf"
+    owner: "{{ dm_uname }}"
+    group: "{{ dm_group }}"
+    mode: '644'
+- name: copy the dm file
+  ansible.builtin.copy:
+    src: "{{ dm_src_bin }}/dm"
+    dest: "{{ dm_directory_bin }}/dm"
+    owner: "{{ dm_uname }}"
+    group: "{{ dm_group }}"
+    mode: '755'
+
+- name: Create the run_dm script
   ansible.builtin.template:
     src: "{{ dm_src_bin }}/run_dm.sh.j2"
     dest: "{{ dm_directory_bin }}/run_dm.sh"
     owner: "{{ dm_uname }}"
     group: "{{ dm_group }}"
     mode: '755'
-  #notify: dm restart
+
+- name: Create the dm_env script
+  ansible.builtin.template:
+    src: "{{ dm_src_bin }}/dm_env.sh.j2"
+    dest: "{{ dm_directory_bin }}/dm_env.sh"
+    owner: "{{ dm_uname }}"
+    group: "{{ dm_group }}"
+    mode: '755'
+
+- name: Create the run_copy_dmlogs script
+  ansible.builtin.template:
+    src: "{{ dm_src_bin }}/run_copy_dmlogs.sh.j2"
+    dest: "{{ dm_directory_bin }}/run_copy_dmlogs.sh"
+    owner: "{{ dm_uname }}"
+    group: "{{ dm_group }}"
+    mode: '755'
